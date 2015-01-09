@@ -3,13 +3,10 @@
 // are changed infrequently
 //
 
-#pragma once
-
-#include "targetver.h"
-
-#include <stdio.h>
-#include <tchar.h>
-
+#include <iostream>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
 
 
 // TODO: reference additional headers your program requires here
