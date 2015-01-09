@@ -26,3 +26,6 @@
 *.exe
 *.out
 *.app
+
+# temporary file opened only while .vcxproj/.sln is loaded to Visual Studio IDE
+*.opensdf
