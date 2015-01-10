@@ -10,5 +10,12 @@ public:
 	~CSprite(void);
 
 	void Draw(void);
+
+	void SetX(int x);
+	void SetY(int y);
+	void SetPosition(int x, int y);
+
+	int GetX(void);
+	int GetY(void);
 };
 

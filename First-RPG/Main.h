@@ -15,5 +15,12 @@ public:
 	~CMain(void);
 
 	void GameLoop(void);
+
+	bool MoveRight;
+	bool MoveLeft;
+	bool MoveUp;
+	bool MoveDown;
+
+	int timeCheck;
 };
 
