@@ -23,7 +23,13 @@ int main(int argc, char* argv[])
 	SDL_Event* mainEvent = new SDL_Event(); // to get events such as pressing the close window button
 
 	SDL_Texture *grass_image = NULL;
-	grass_image = IMG_LoadTexture(renderer, "grass.bmp");
+	grass_image = IMG_LoadTexture(renderer, "data/grass.bmp");
+		if(grass_image == NULL)
+	{
+		std::cout << "Grass texture not created!" << std::endl;
+	}
+
+
 
 	SDL_Rect grass_rect;
 	//location to start drawing
@@ -35,7 +41,11 @@ int main(int argc, char* argv[])
 
 	//do same thing but for bob image
 	SDL_Texture *bob_image = NULL;
-	bob_image = IMG_LoadTexture(renderer, "bob.png");
+	bob_image = IMG_LoadTexture(renderer, "data/bob.png");
+			if(bob_image == NULL)
+	{
+		std::cout << "Bob not created" << std::endl;
+	}
 
 	SDL_Rect bob_rect;
 	bob_rect.x = 300;
