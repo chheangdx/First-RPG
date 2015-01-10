@@ -1,4 +1,4 @@
-﻿Build started 1/9/2015 10:52:47 AM.
+﻿Build started 1/9/2015 9:17:52 PM.
      1>Project "C:\Users\User\git\First-RPG\First-RPG\First-RPG.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\First-RPG.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -19,4 +19,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.46
+Time Elapsed 00:00:01.12
