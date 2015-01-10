@@ -19,6 +19,12 @@ CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int
 	//width and height to draw
 	rect.w = w;
 	rect.h = h;
+
+	X_pos = (float) x;
+	Y_pos = (float) y;
+
+	Origin_X = 0;
+	Origin_Y = 0;
 }
 
 
@@ -33,25 +39,55 @@ void CSprite::Draw(void)
 	SDL_RenderCopy(renderer, image, NULL, &rect); //put image with parameters rect onto renderer
 }
 
-void CSprite::SetX(int x)
+void CSprite::SetX(float x)
 {
-	rect.x = x;
+	X_pos = x;
+	rect.x = int(X_pos - Origin_X);
 }
-void CSprite::SetY(int y)
+void CSprite::SetY(float y)
 {
-	rect.y = y;
+	Y_pos = y;
+	rect.y = int(Y_pos - Origin_Y);
 }
-void CSprite::SetPosition(int x, int y)
+void CSprite::SetPosition(float x, float y)
 {
-	rect.x = x;
-	rect.y = y;
+	X_pos = x;
+	Y_pos = y;
+
+	rect.x = int(X_pos - Origin_X);
+	rect.y = int(Y_pos - Origin_Y);
 }
 
-int CSprite::GetX(void)
+float CSprite::GetX(void)
 {
-	return rect.x;
+	return X_pos;
 }
-int CSprite::GetY(void)
+float CSprite::GetY(void)
 {
-	return rect.y;
+	return Y_pos;
+}
+
+void CSprite::SetOrigin(float x, float y)
+{
+	Origin_X = x;
+	Origin_Y = y;
+}
+
+int CSprite::GetHeight()
+{
+	return rect.h;
+}
+
+int CSprite::GetWidth()
+{
+	return rect.w;
+}
+void CSprite::SetHeight(int h)
+{
+	rect.h = h;
+}
+
+void CSprite::SetWidth(int w)
+{
+	rect.w = w;
 }
