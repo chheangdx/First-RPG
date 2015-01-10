@@ -78,10 +78,14 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="SDL_Setup.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="First-RPG.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SDL_Setup.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
