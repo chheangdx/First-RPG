@@ -71,6 +71,8 @@ void CSprite::SetOrigin(float x, float y)
 {
 	Origin_X = x;
 	Origin_Y = y;
+
+	SetPosition(GetX(), GetY());
 }
 
 int CSprite::GetHeight()

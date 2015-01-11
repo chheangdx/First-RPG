@@ -14,6 +14,10 @@ CMain::CMain(int screen_width,int screen_height)
 	timeCheck = SDL_GetTicks();
 	MouseX = 0;
 	MouseY = 0;
+
+	follow = false;
+
+	
 }
 
 
@@ -32,24 +36,29 @@ void CMain::GameLoop(void)
 
 		grass->Draw();
 		bob->Draw();
-
-		if(timeCheck+10 < SDL_GetTicks()) //update every 500 ms
+		
+		if(csdl_setup->GetMainEvent()->type == SDL_MOUSEBUTTONDOWN
+			|| csdl_setup->GetMainEvent()->type == SDL_MOUSEMOTION)
 		{
-			float distance = GetDistance(bob->GetX(), bob->GetY(), (float) MouseX, (float) MouseY);
+			if(csdl_setup->GetMainEvent()->button.button == SDL_BUTTON_LEFT)
+			{
+				Follow_point_x = MouseX;
+				Follow_point_y = MouseY;
+				follow = true;
+			}
+		}
+
+		if(timeCheck+10 < SDL_GetTicks() && follow) //update every 500 ms
+		{
+			float distance = GetDistance(bob->GetX(), bob->GetY(), (float) Follow_point_x, (float) Follow_point_y);
 			if((int)distance != 0){
-			if(bob->GetX() > MouseX){
-				bob->SetX(bob->GetX() - ((bob->GetX()-MouseX)/distance) * 1.5f);
+			if(bob->GetX() != Follow_point_x){
+				bob->SetX(bob->GetX() - ((bob->GetX()-Follow_point_x)/distance) * 1.5f);
 			}
-			if(bob->GetX() < MouseX){
-				bob->SetX(bob->GetX() - ((bob->GetX()-MouseX)/distance) * 1.5f);
+			if(bob->GetY() != Follow_point_y){
+				bob->SetY(bob->GetY() - ((bob->GetY()-Follow_point_y)/distance) * 1.5f);
 			}
-			if(bob->GetY() < MouseY){
-				bob->SetY(bob->GetY() - ((bob->GetY()-MouseY)/distance) * 1.5f);
-			}
-			if(bob->GetY() > MouseY){
-				bob->SetY(bob->GetY() - ((bob->GetY()-MouseY)/distance) * 1.5f);
-			}
-			}
+			}else follow = false;
 
 			timeCheck = SDL_GetTicks();
 		}
