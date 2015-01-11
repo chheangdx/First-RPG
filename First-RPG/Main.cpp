@@ -4,15 +4,18 @@
 
 CMain::CMain(int screen_width,int screen_height)
 {
+	CameraX = 0;
+	CameraY = 0;
+
 	quit = false;
 
 	csdl_setup = new CSDL_Setup(&quit, screen_width, screen_height);
-	grass = new CSprite(csdl_setup->GetRenderer(), "data/grass.bmp", 0, 0, 600, 500, 1, 1);
+	grass = new CSprite(csdl_setup->GetRenderer(), "data/grass.bmp", 0, 0, 600, 500, 1, 1, &CameraX, &CameraY);
 
 	MouseX = 0;
 	MouseY = 0;
 
-	bob = new MainCharacter(csdl_setup, &MouseX, &MouseY);
+	bob = new MainCharacter(csdl_setup, &MouseX, &MouseY, &CameraX, &CameraY);
 }
 
 
@@ -32,7 +35,7 @@ void CMain::GameLoop(void)
 
 		bob->Draw();
 		bob->Update();
-	
+
 		csdl_setup->End();
 	}
 }

@@ -16,6 +16,9 @@ private:
 	int MouseY;
 
 	MainCharacter* bob;
+
+	float CameraX;
+	float CameraY;
 public:
 	CMain(int screen_width,int screen_height);
 	~CMain(void);

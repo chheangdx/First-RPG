@@ -21,8 +21,14 @@ private:
 	int *MouseX;
 	int *MouseY;
 
+	float *CameraX;
+	float *CameraY;
+
+
+	void UpdateControls();
+	void UpdateAnimation();
 public:
-	MainCharacter(CSDL_Setup* csdl_setup, int *MouseX, int *MouseY);
+	MainCharacter(CSDL_Setup* csdl_setup, int *MouseX, int *MouseY, float *CameraX, float *CameraY);
 	~MainCharacter(void);
 
 	float GetDistance(float x1, float y1, float x2, float y2);

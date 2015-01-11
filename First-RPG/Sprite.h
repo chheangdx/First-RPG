@@ -22,12 +22,17 @@ private:
 	int frames_y;
 
 	int CurrentFrame;
-	int animationDelay;
+	unsigned int animationDelay;
+
+	SDL_Rect camera;
+	float *CameraX;
+	float *CameraY;
 public:
-	CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h, int rows, int columns);
+	CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h, int rows, int columns, float *CameraX, float *CameraY);
 	~CSprite(void);
 
 	void Draw(void);
+	void DrawSteady();
 	void PlayAnimation(int BeginFrame, int EndFrame, int Row, int Speed);
 
 	void SetX(float x);

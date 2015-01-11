@@ -2,9 +2,11 @@
 #include "Sprite.h"
 
 
-CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h, int rows, int columns)
+CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h, int rows, int columns, float *CameraX, float *CameraY)
 {
 	this->renderer = renderer;
+	this->CameraX = CameraX;
+	this->CameraY = CameraY;
 
 	image = NULL;
 	image = IMG_LoadTexture(this->renderer, FilePath.c_str());
@@ -24,6 +26,11 @@ CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int
 
 	frames_x = columns;
 	frames_y = rows;
+
+	camera.x = rect.x + *CameraX;
+	camera.y = rect.y + *CameraY;
+	camera.w = rect.w;
+	camera.h = rect.h;
 
 	crop.x = 0;
 	crop.y = 0;
@@ -49,7 +56,15 @@ CSprite::~CSprite(void)
 
 void CSprite::Draw(void)
 {
-	SDL_RenderCopy(renderer, image, &crop, &rect); //put image with parameters rect onto renderer
+	camera.x = rect.x + *CameraX;
+	camera.y = rect.y + *CameraY;
+
+	SDL_RenderCopy(renderer, image, &crop, &camera);
+}
+
+void CSprite::DrawSteady()
+{
+	SDL_RenderCopy(renderer, image, &crop, &rect);
 }
 
 void CSprite::SetX(float x)
