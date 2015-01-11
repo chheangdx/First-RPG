@@ -20,6 +20,13 @@ CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int
 	rect.w = w;
 	rect.h = h;
 
+	SDL_QueryTexture(image, NULL, NULL, &img_width, &img_height);
+
+	crop.x = 0;
+	crop.y = 0;
+	crop.w = img_width;
+	crop.h = img_height;
+
 	X_pos = (float) x;
 	Y_pos = (float) y;
 
@@ -36,7 +43,7 @@ CSprite::~CSprite(void)
 
 void CSprite::Draw(void)
 {
-	SDL_RenderCopy(renderer, image, NULL, &rect); //put image with parameters rect onto renderer
+	SDL_RenderCopy(renderer, image, &crop, &rect); //put image with parameters rect onto renderer
 }
 
 void CSprite::SetX(float x)

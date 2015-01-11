@@ -3,8 +3,14 @@ class CSprite
 {
 private:
 	SDL_Texture* image;
+	
 	SDL_Rect rect;
+	SDL_Rect crop;
+
 	SDL_Renderer* renderer;
+
+	int img_width;
+	int img_height;
 
 	float X_pos;
 	float Y_pos;
