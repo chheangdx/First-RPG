@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Environment.h"
 #include "SDL_Setup.h"
 #include "Sprite.h"
 #include "MainCharacter.h"
@@ -10,7 +11,6 @@ class CMain
 private:
 	bool quit;
 	CSDL_Setup* csdl_setup;
-	CSprite* grass;
 
 	int MouseX;
 	int MouseY;
@@ -19,6 +19,8 @@ private:
 
 	float CameraX;
 	float CameraY;
+
+	CEnvironment* ForestArea;
 public:
 	CMain(int screen_width,int screen_height);
 	~CMain(void);

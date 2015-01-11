@@ -10,7 +10,8 @@ CMain::CMain(int screen_width,int screen_height)
 	quit = false;
 
 	csdl_setup = new CSDL_Setup(&quit, screen_width, screen_height);
-	grass = new CSprite(csdl_setup->GetRenderer(), "data/grass.bmp", 0, 0, 600, 500, 1, 1, &CameraX, &CameraY);
+
+	ForestArea = new CEnvironment(csdl_setup, screen_width, screen_height, &CameraX, &CameraY);
 
 	MouseX = 0;
 	MouseY = 0;
@@ -22,7 +23,6 @@ CMain::CMain(int screen_width,int screen_height)
 CMain::~CMain(void)
 {
 	delete csdl_setup;
-	delete grass;
 }
 
 void CMain::GameLoop(void)
@@ -30,11 +30,12 @@ void CMain::GameLoop(void)
 	while(!quit && csdl_setup->GetMainEvent()->type != SDL_QUIT){
 		csdl_setup->Begin();
 		SDL_GetMouseState(&MouseX, &MouseY);
-
-		grass->Draw();
+		ForestArea->DrawBack();
 
 		bob->Draw();
 		bob->Update();
+
+		ForestArea->DrawFront();
 
 		csdl_setup->End();
 	}
