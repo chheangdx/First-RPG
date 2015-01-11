@@ -9,9 +9,11 @@ CEnvironment::CEnvironment(CSDL_Setup* csdl_setup, int screen_width,int screen_h
 
 	for(int i=0; i<4; i++){
 		for(int j=0; j<7; j++){
-			grass[i][j] = new CSprite(csdl_setup->GetRenderer(), "data/environment/grass.bmp", screen_width*i, screen_height*j, 600, 500, 1, 1, &CameraX, &CameraY);
+			grass[i][j] = new CSprite(csdl_setup->GetRenderer(), "data/environment/grass.bmp", screen_width*i, screen_height*j, 600, 500, 1, 1, CameraX, CameraY);
 		}
 	}
+
+	tree = new Tree(csdl_setup, CameraX, CameraY, 300, 300);
 }
 
 
@@ -31,7 +33,9 @@ void CEnvironment::DrawBack()
 			grass[i][j]->Draw();
 		}
 	}
+	tree->DrawTrunk();
 }
 void CEnvironment::DrawFront()
 {
+	tree->DrawCrown();
 }

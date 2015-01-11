@@ -2,11 +2,13 @@
 
 #include "SDL_Setup.h"
 #include "Sprite.h"
+#include "Tree.h"
 
 class CEnvironment
 {
 private:
 	CSprite* grass[4][7];
+	Tree* tree;
 
 	float *CameraX;
 	float *CameraY;	
