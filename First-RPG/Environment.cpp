@@ -13,7 +13,10 @@ CEnvironment::CEnvironment(CSDL_Setup* csdl_setup, int screen_width,int screen_h
 		}
 	}
 
-	tree = new Tree(csdl_setup, CameraX, CameraY, 300, 300);
+	trees.push_back(new Tree(csdl_setup, CameraX, CameraY, 300, 300));
+	trees.push_back(new Tree(csdl_setup, CameraX, CameraY, 350, 300));
+
+	events = csdl_setup->GetMainEvent();
 }
 
 
@@ -24,6 +27,10 @@ CEnvironment::~CEnvironment(void)
 			delete grass[i][j];
 		}
 	}
+	for(std::vector<Tree*>::iterator i=trees.begin(); i != trees.end(); ++i){
+		delete (*i);
+	}
+	trees.clear();
 }
 
 void CEnvironment::DrawBack()
@@ -33,9 +40,17 @@ void CEnvironment::DrawBack()
 			grass[i][j]->Draw();
 		}
 	}
-	tree->DrawTrunk();
+	for(std::vector<Tree*>::iterator i=trees.begin(); i != trees.end(); ++i){
+		(*i)->DrawTrunk();
+	}
 }
 void CEnvironment::DrawFront()
 {
-	tree->DrawCrown();
+	for(std::vector<Tree*>::iterator i=trees.begin(); i != trees.end(); ++i){
+		(*i)->DrawCrown();
+	}
+}
+
+void CEnvironment::Update()
+{
 }
