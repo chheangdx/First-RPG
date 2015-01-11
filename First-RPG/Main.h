@@ -21,6 +21,8 @@ private:
 	bool follow;
 	int Follow_point_x;
 	int Follow_point_y;
+	float distance;
+
 public:
 	CMain(int screen_width,int screen_height);
 	~CMain(void);

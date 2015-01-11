@@ -16,8 +16,7 @@ CMain::CMain(int screen_width,int screen_height)
 	MouseY = 0;
 
 	follow = false;
-
-	
+	distance = 0;
 }
 
 
@@ -40,7 +39,8 @@ void CMain::GameLoop(void)
 		float angle = atan2(Follow_point_y - bob->GetY(), Follow_point_x - bob->GetX());
 		angle = angle * (180 / 3.14) + 180;
 
-		float distance = GetDistance(bob->GetX(), bob->GetY(), (float) Follow_point_x, (float) Follow_point_y);
+		distance = GetDistance(bob->GetX(), bob->GetY(), (float) Follow_point_x, (float) Follow_point_y);
+
 		if((int)distance != 0){
 		if(angle > 45 && angle <= 135)
 		{
