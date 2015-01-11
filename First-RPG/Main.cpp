@@ -7,8 +7,8 @@ CMain::CMain(int screen_width,int screen_height)
 	quit = false;
 
 	csdl_setup = new CSDL_Setup(&quit, screen_width, screen_height);
-	grass = new CSprite(csdl_setup->GetRenderer(), "data/grass.bmp", 0, 0, 600, 500);
-	bob = new CSprite(csdl_setup->GetRenderer(), "data/bob.png", 300, 250, 50, 100);
+	grass = new CSprite(csdl_setup->GetRenderer(), "data/grass.bmp", 0, 0, 600, 500, 1, 1);
+	bob = new CSprite(csdl_setup->GetRenderer(), "data/tom.png", 300, 250, 100, 120, 4, 4);
 	bob->SetOrigin(bob->GetWidth()/2.0f, (float) bob->GetHeight());
 
 	timeCheck = SDL_GetTicks();
@@ -36,7 +36,37 @@ void CMain::GameLoop(void)
 
 		grass->Draw();
 		bob->Draw();
-		
+
+		float angle = atan2(Follow_point_y - bob->GetY(), Follow_point_x - bob->GetX());
+		angle = angle * (180 / 3.14) + 180;
+
+		float distance = GetDistance(bob->GetX(), bob->GetY(), (float) Follow_point_x, (float) Follow_point_y);
+		if((int)distance != 0){
+		if(angle > 45 && angle <= 135)
+		{
+			//up
+			if(follow) bob->PlayAnimation(0, 3, 3, 200);
+			else bob->PlayAnimation(1, 1, 3, 200);
+		}
+		else if(angle > 125 && angle <= 225)
+		{
+			//right
+			if(follow)bob->PlayAnimation(0 , 3, 2, 200);
+			else bob->PlayAnimation(1, 1, 2, 200);
+		}
+		else if(angle > 225 && angle <= 315)
+		{
+			//down
+			if(follow)bob->PlayAnimation(0, 3, 0, 200);
+			else bob->PlayAnimation(1, 1, 0, 200);
+		}
+		else if((angle > 315 && angle <= 360) || (angle >= -45 && angle <=45))
+		{
+			//left
+			if(follow)bob->PlayAnimation(0, 3, 1, 200);
+			else bob->PlayAnimation(1, 1, 1, 200);
+		}
+		}
 		if(csdl_setup->GetMainEvent()->type == SDL_MOUSEBUTTONDOWN
 			|| csdl_setup->GetMainEvent()->type == SDL_MOUSEMOTION)
 		{
@@ -50,14 +80,13 @@ void CMain::GameLoop(void)
 
 		if(timeCheck+10 < SDL_GetTicks() && follow) //update every 500 ms
 		{
-			float distance = GetDistance(bob->GetX(), bob->GetY(), (float) Follow_point_x, (float) Follow_point_y);
 			if((int)distance != 0){
-			if(bob->GetX() != Follow_point_x){
-				bob->SetX(bob->GetX() - ((bob->GetX()-Follow_point_x)/distance) * 1.5f);
-			}
-			if(bob->GetY() != Follow_point_y){
-				bob->SetY(bob->GetY() - ((bob->GetY()-Follow_point_y)/distance) * 1.5f);
-			}
+				if(bob->GetX() != Follow_point_x){
+					bob->SetX(bob->GetX() - ((bob->GetX()-Follow_point_x)/distance) * 1.5f);
+				}
+				if(bob->GetY() != Follow_point_y){
+					bob->SetY(bob->GetY() - ((bob->GetY()-Follow_point_y)/distance) * 1.5f);
+				}
 			}else follow = false;
 
 			timeCheck = SDL_GetTicks();

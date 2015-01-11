@@ -17,11 +17,18 @@ private:
 
 	float Origin_X;
 	float Origin_Y;
+
+	int frames_x;
+	int frames_y;
+
+	int CurrentFrame;
+	int animationDelay;
 public:
-	CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h);
+	CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h, int rows, int columns);
 	~CSprite(void);
 
 	void Draw(void);
+	void PlayAnimation(int BeginFrame, int EndFrame, int Row, int Speed);
 
 	void SetX(float x);
 	void SetY(float y);

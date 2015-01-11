@@ -2,7 +2,7 @@
 #include "Sprite.h"
 
 
-CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h)
+CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h, int rows, int columns)
 {
 	this->renderer = renderer;
 
@@ -22,16 +22,22 @@ CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int
 
 	SDL_QueryTexture(image, NULL, NULL, &img_width, &img_height);
 
+	frames_x = columns;
+	frames_y = rows;
+
 	crop.x = 0;
 	crop.y = 0;
-	crop.w = img_width;
-	crop.h = img_height;
+	crop.w = img_width/frames_x;
+	crop.h = img_height/frames_y;
 
 	X_pos = (float) x;
 	Y_pos = (float) y;
 
 	Origin_X = 0;
 	Origin_Y = 0;
+
+	CurrentFrame = 0;
+	animationDelay = 0;
 }
 
 
@@ -99,4 +105,21 @@ void CSprite::SetHeight(int h)
 void CSprite::SetWidth(int w)
 {
 	rect.w = w;
+}
+
+void CSprite::PlayAnimation(int BeginFrame, int EndFrame, int Row, int Speed)
+{
+	if(animationDelay + Speed < SDL_GetTicks()){
+		if(BeginFrame != EndFrame){
+			if(EndFrame <= CurrentFrame) CurrentFrame = BeginFrame;
+			else CurrentFrame++;
+		}else CurrentFrame = BeginFrame;
+
+		crop.x = CurrentFrame * img_width/frames_x;
+		crop.y = Row * (img_height/frames_y);
+		crop.w = img_width/frames_x;
+		crop.h = img_height/frames_y;
+
+		animationDelay = SDL_GetTicks();
+	}
 }
