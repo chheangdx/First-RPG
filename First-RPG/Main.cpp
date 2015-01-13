@@ -36,7 +36,7 @@ void CMain::GameLoop(void)
 		bob->Update();
 
 		ForestArea->DrawFront();
-
+		ForestArea->Update();
 		csdl_setup->End();
 	}
 }

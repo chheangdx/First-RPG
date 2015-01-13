@@ -16,7 +16,8 @@ CEnvironment::CEnvironment(CSDL_Setup* csdl_setup, int screen_width,int screen_h
 	trees.push_back(new Tree(csdl_setup, CameraX, CameraY, 300, 300));
 	trees.push_back(new Tree(csdl_setup, CameraX, CameraY, 350, 300));
 
-	events = csdl_setup->GetMainEvent();
+	this->csdl_setup = csdl_setup;
+	OnePressed = false;
 }
 
 
@@ -52,5 +53,18 @@ void CEnvironment::DrawFront()
 }
 
 void CEnvironment::Update()
-{
+{	
+	if(csdl_setup->GetMainEvent()->type == SDL_KEYDOWN){
+		if(!OnePressed && csdl_setup->GetMainEvent()->key.keysym.sym == SDLK_1)
+		{
+			trees.push_back(new Tree(csdl_setup, CameraX, CameraY,  - (int) *CameraX + 275, - (int) *CameraY + 90));
+			OnePressed = true;
+		}
+	}
+	if(csdl_setup->GetMainEvent()->type == SDL_KEYUP){
+		if(OnePressed && csdl_setup->GetMainEvent()->key.keysym.sym == SDLK_1)
+		{
+			OnePressed = false;
+		}
+	} 
 }

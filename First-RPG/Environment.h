@@ -14,7 +14,9 @@ private:
 	float *CameraX;
 	float *CameraY;	
 
-	SDL_Event* events;
+	CSDL_Setup* csdl_setup;
+
+	bool OnePressed;
 public:
 	CEnvironment(CSDL_Setup* csdl_setup, int screen_width,int screen_height, float *CameraX, float *CameraY);
 	~CEnvironment(void);

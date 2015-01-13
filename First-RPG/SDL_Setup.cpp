@@ -4,6 +4,8 @@
 
 CSDL_Setup::CSDL_Setup(bool *quit, int screen_width, int screen_height)
 {
+	SDL_Init(SDL_INIT_VIDEO);
+
 	window = NULL;
 	window = SDL_CreateWindow("My First RPG!", 100, 100, screen_width, screen_height, SDL_WINDOW_SHOWN);
 	if(window == NULL)
