@@ -4,10 +4,14 @@
 #include "Sprite.h"
 #include "Tree.h"
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <string>
 
 class CEnvironment
 {
 private:
+	int Mode;
 	CSprite* grass[4][7];
 	std::vector <Tree*> trees;
 
@@ -25,5 +29,14 @@ public:
 	void DrawFront();
 
 	void Update();
+	
+	void SaveToFile();
+	void LoadFromFile();
+
+	enum ModeType
+	{
+		GamePlay, 
+		LevelCreation
+	};
 };
 
