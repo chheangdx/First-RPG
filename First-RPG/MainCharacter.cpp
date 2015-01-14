@@ -5,15 +5,16 @@
 #define StartX 300
 #define StartY 250
 
-MainCharacter::MainCharacter(CSDL_Setup* csdl_setup, int *MouseX, int *MouseY, float *CameraX, float *CameraY)
+MainCharacter::MainCharacter(CSDL_Setup* csdl_setup, int *MouseX, int *MouseY, float *CameraX, float *CameraY, CEnvironment* environment)
 {
+	this->environment = environment;
 	this->csdl_setup = csdl_setup;
 	this->MouseX = MouseX;
 	this->MouseY = MouseY;
 	this->CameraX = CameraX;
 	this->CameraY = CameraY;
 
-	bob = new CSprite(csdl_setup->GetRenderer(), "data/tom.png", StartX, StartY, 100, 120, 4, 4, CameraX, CameraY);
+	bob = new CSprite(csdl_setup->GetRenderer(), "data/tom.png", StartX, StartY, 100, 120, 4, 4, CameraX, CameraY, CCollisionRectangle(0,0, 100, 120));
 	bob->SetOrigin(bob->GetWidth()/2.0f, (float) bob->GetHeight());
 
 	timeCheck = SDL_GetTicks();
@@ -93,11 +94,28 @@ void MainCharacter::UpdateControls()
 	if(timeCheck+10 < SDL_GetTicks() && follow) //update every 500 ms
 	{
 		if((int)distance > 0){
-			if(*CameraX != Follow_point_x){
-				*CameraX = *CameraX - ((*CameraX-Follow_point_x)/distance) * 1.5f;
+			bool colliding = false;
+			for(int i=0; i<environment->GetTrees().size(); i++){
+				if(bob->isColliding(environment->GetTrees()[i]->GetTrunk()->GetCollisionRect()))
+				{
+					if(*CameraX > Follow_point_x) *CameraX = *CameraX + 5;
+					if(*CameraX < Follow_point_x) *CameraX = *CameraX - 5;
+					if(*CameraY > Follow_point_y) *CameraY = *CameraY + 5;
+					if(*CameraY < Follow_point_y) *CameraY = *CameraY - 5;
+					Follow_point_x = *CameraX;
+					Follow_point_y = *CameraY;
+					distance = 0;
+					follow = false;
+					colliding = true;
+				}
 			}
-			if(*CameraY != Follow_point_y){
-				*CameraY = *CameraY - ((*CameraY-Follow_point_y)/distance) * 1.5f;
+			if(!colliding){
+				if(*CameraX != Follow_point_x){
+					*CameraX = *CameraX - ((*CameraX-Follow_point_x)/distance) * 2.5f;
+				}
+				if(*CameraY != Follow_point_y){
+					*CameraY = *CameraY - ((*CameraY-Follow_point_y)/distance) * 2.5f;
+				}
 			}
 		}else follow = false;
 
@@ -110,5 +128,4 @@ void MainCharacter::Update()
 {			
 	UpdateAnimation();
 	UpdateControls();
-
 }

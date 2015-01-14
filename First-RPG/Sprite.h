@@ -1,4 +1,7 @@
 #pragma once
+#include "StdAfx.h"
+#include "CollisionRectangle.h"
+
 class CSprite
 {
 private:
@@ -27,8 +30,10 @@ private:
 	SDL_Rect camera;
 	float *CameraX;
 	float *CameraY;
+
+	CCollisionRectangle collision_rect;
 public:
-	CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h, int rows, int columns, float *CameraX, float *CameraY);
+	CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h, int rows, int columns, float *CameraX, float *CameraY, CCollisionRectangle collision_rect);
 	~CSprite(void);
 
 	void Draw(void);
@@ -48,5 +53,8 @@ public:
 	void SetWidth(int w);
 	int GetHeight(void);
 	void SetHeight(int h);
+
+	bool isColliding(CCollisionRectangle theCollider);
+	CCollisionRectangle GetCollisionRect();
 };
 

@@ -33,6 +33,8 @@ public:
 	void SaveToFile();
 	void LoadFromFile();
 
+	std::vector<Tree*> GetTrees();
+
 	enum ModeType
 	{
 		GamePlay, 

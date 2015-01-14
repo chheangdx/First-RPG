@@ -1,8 +1,7 @@
-#include "StdAfx.h"
 #include "Sprite.h"
 
 
-CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h, int rows, int columns, float *CameraX, float *CameraY)
+CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int w, int h, int rows, int columns, float *CameraX, float *CameraY, CCollisionRectangle collision_rect)
 {
 	this->renderer = renderer;
 	this->CameraX = CameraX;
@@ -27,8 +26,8 @@ CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int
 	frames_x = columns;
 	frames_y = rows;
 
-	camera.x = rect.x + *CameraX;
-	camera.y = rect.y + *CameraY;
+	camera.x = rect.x + (int)*CameraX;
+	camera.y = rect.y + (int)*CameraY;
 	camera.w = rect.w;
 	camera.h = rect.h;
 
@@ -45,6 +44,8 @@ CSprite::CSprite(SDL_Renderer* renderer, std::string FilePath, int x, int y, int
 
 	CurrentFrame = 0;
 	animationDelay = 0;
+
+	this->collision_rect = collision_rect;
 }
 
 
@@ -56,8 +57,11 @@ CSprite::~CSprite(void)
 
 void CSprite::Draw(void)
 {
-	camera.x = rect.x + *CameraX;
-	camera.y = rect.y + *CameraY;
+	camera.x = rect.x + (int) *CameraX;
+	camera.y = rect.y + (int) *CameraY;
+
+	collision_rect.SetX(camera.x);
+	collision_rect.SetY(camera.y);
 
 	SDL_RenderCopy(renderer, image, &crop, &camera);
 }
@@ -137,4 +141,15 @@ void CSprite::PlayAnimation(int BeginFrame, int EndFrame, int Row, int Speed)
 
 		animationDelay = SDL_GetTicks();
 	}
+}
+bool CSprite::isColliding(CCollisionRectangle theCollider)
+{
+	return !(collision_rect.GetRectangle().x + collision_rect.GetRectangle().w < theCollider.GetRectangle().x
+				|| collision_rect.GetRectangle().y + collision_rect.GetRectangle().h < theCollider.GetRectangle().y
+				|| collision_rect.GetRectangle().x > theCollider.GetRectangle().x + theCollider.GetRectangle().w
+				|| collision_rect.GetRectangle().y > theCollider.GetRectangle().y + theCollider.GetRectangle().h);
+}
+CCollisionRectangle CSprite::GetCollisionRect()
+{
+	return collision_rect;
 }

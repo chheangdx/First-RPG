@@ -18,5 +18,8 @@ public:
 
 	int GetX();
 	int GetY();
+
+	CSprite* GetCrown();
+	CSprite* GetTrunk();
 };
 

@@ -2,11 +2,13 @@
 #include "Sprite.h"
 #include "SDL_Setup.h"
 #include <math.h>
+#include "Environment.h"
 
 class MainCharacter
 {
 private:
 	CSprite* bob;
+	CEnvironment* environment;
 
 	unsigned int timeCheck;
 
@@ -28,9 +30,7 @@ private:
 	void UpdateControls();
 	void UpdateAnimation();
 public:
-	MainCharacter(CSDL_Setup* csdl_setup, int *MouseX, int *MouseY, float *CameraX, float *CameraY);
-	~MainCharacter(void);
-
+	MainCharacter(CSDL_Setup* csdl_setup, int *MouseX, int *MouseY, float *CameraX, float *CameraY, CEnvironment* environment);
 	float GetDistance(float x1, float y1, float x2, float y2);
 	void Update();
 	void Draw();

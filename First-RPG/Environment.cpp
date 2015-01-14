@@ -9,7 +9,7 @@ CEnvironment::CEnvironment(CSDL_Setup* csdl_setup, int screen_width,int screen_h
 
 	for(int i=0; i<4; i++){
 		for(int j=0; j<7; j++){
-			grass[i][j] = new CSprite(csdl_setup->GetRenderer(), "data/environment/grass.bmp", screen_width*i, screen_height*j, 600, 500, 1, 1, CameraX, CameraY);
+			grass[i][j] = new CSprite(csdl_setup->GetRenderer(), "data/environment/grass.bmp", screen_width*i, screen_height*j, 600, 500, 1, 1, CameraX, CameraY, CCollisionRectangle());
 		}
 	}
 
@@ -186,4 +186,8 @@ void CEnvironment::LoadFromFile()
 		LoadedFile.close();
 		std::cout << "Level Loaded! \n";
 	}else std::cout << "File could not be Open: data/LevelLayout.txt \n";
+}
+std::vector<Tree*> CEnvironment::GetTrees()
+{
+	return trees;
 }
