@@ -88,12 +88,7 @@ void CEnvironment::Update()
 				{
 					if(trees.size() > 0) 
 					{
-						int count = 0;
-						for(std::vector<Tree*>::iterator i = trees.begin(); i!=trees.end(); ++i)
-						{
-							if(count == trees.size()) delete (*i);
-							count++;
-						}
+						delete trees[trees.size()-1];
 						trees.pop_back();
 					}
 					OnePressed = true;

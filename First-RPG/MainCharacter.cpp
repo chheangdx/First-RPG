@@ -14,7 +14,7 @@ MainCharacter::MainCharacter(CSDL_Setup* csdl_setup, int *MouseX, int *MouseY, f
 	this->CameraX = CameraX;
 	this->CameraY = CameraY;
 
-	bob = new CSprite(csdl_setup->GetRenderer(), "data/tom.png", StartX, StartY, 100, 120, 4, 4, CameraX, CameraY, CCollisionRectangle(0,0, 100, 120));
+	bob = new CSprite(csdl_setup->GetRenderer(), "data/tom.png", StartX, StartY, 100, 120, 4, 4, CameraX, CameraY, CCollisionRectangle(270,220, 50, 30));
 	bob->SetOrigin(bob->GetWidth()/2.0f, (float) bob->GetHeight());
 
 	timeCheck = SDL_GetTicks();
@@ -95,15 +95,15 @@ void MainCharacter::UpdateControls()
 	{
 		if((int)distance > 0){
 			bool colliding = false;
-			for(int i=0; i<environment->GetTrees().size(); i++){
+			for(unsigned int i=0; i<environment->GetTrees().size(); i++){
 				if(bob->isColliding(environment->GetTrees()[i]->GetTrunk()->GetCollisionRect()))
 				{
 					if(*CameraX > Follow_point_x) *CameraX = *CameraX + 5;
 					if(*CameraX < Follow_point_x) *CameraX = *CameraX - 5;
 					if(*CameraY > Follow_point_y) *CameraY = *CameraY + 5;
 					if(*CameraY < Follow_point_y) *CameraY = *CameraY - 5;
-					Follow_point_x = *CameraX;
-					Follow_point_y = *CameraY;
+					Follow_point_x = (int) *CameraX;
+					Follow_point_y = (int) *CameraY;
 					distance = 0;
 					follow = false;
 					colliding = true;

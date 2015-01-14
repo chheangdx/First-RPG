@@ -16,7 +16,7 @@ CMain::CMain(int screen_width,int screen_height)
 	MouseX = 0;
 	MouseY = 0;
 
-	bob = new MainCharacter(csdl_setup, &MouseX, &MouseY, &CameraX, &CameraY);
+	bob = new MainCharacter(csdl_setup, &MouseX, &MouseY, &CameraX, &CameraY, ForestArea);
 }
 
 

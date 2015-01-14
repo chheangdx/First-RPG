@@ -9,6 +9,8 @@ private:
 	CSprite* Crown;
 	CSprite* Trunk;
 	int x,y;
+	float *CameraX;
+	float *CameraY;
 public:
 	Tree(CSDL_Setup* csdl_setup, float *CameraX, float *CameraY, int x, int y);
 	~Tree(void);

@@ -56,5 +56,6 @@ public:
 
 	bool isColliding(CCollisionRectangle theCollider);
 	CCollisionRectangle GetCollisionRect();
+	SDL_Rect GetPositionRect(){return rect;}
 };
 
